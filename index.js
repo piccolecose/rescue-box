@@ -1,12 +1,12 @@
 require("dotenv").config();
 const { Octokit } = require("@octokit/rest");
-const moment = require('moment');
-const changeCase = require('change-case')
+const moment = require("moment");
+const changeCase = require("change-case");
 
 const {
   GIST_ID: gistId,
   GH_TOKEN: githubToken,
-  RESCUETIME_API_KEY: rescueTimeKey
+  RESCUETIME_API_KEY: rescueTimeKey,
 } = process.env;
 
 const octokit = new Octokit({ auth: githubToken });
@@ -35,17 +35,16 @@ async function updateGist(stats) {
   const { productivity_pulse, date, total_duration_formatted } = stats;
   const statsToRender = ["all_productive", "all_distracting", "neutral"];
 
-  lines.push([`⏰ Stats for ${moment(date).format('MMMM Do YYYY')}`])
+  lines.push([`⏰ Stats for ${moment(date).format("MMMM Do YYYY")}`]);
 
   const line = [
     "Productivity Pulse".padEnd(19),
     String(total_duration_formatted).padEnd(10),
     generateBarChart(productivity_pulse, 10),
-    String(productivity_pulse.toFixed(0)).padStart(3) + "%"
+    String(productivity_pulse.toFixed(0)).padStart(3) + "%",
   ];
 
   lines.push(line.join(" "));
-
 
   for (var i = 0; i < statsToRender.length; i++) {
     const stat = stats[`${statsToRender[i]}_percentage`];
@@ -55,7 +54,7 @@ async function updateGist(stats) {
       changeCase.capitalCase(statsToRender[i]).padEnd(19),
       String(statTime).padEnd(10),
       generateBarChart(stat, 10),
-      String(stat.toFixed(0)).padStart(3) + "%"
+      String(stat.toFixed(0)).padStart(3) + "%",
     ];
 
     lines.push(line.join(" "));
@@ -69,9 +68,9 @@ async function updateGist(stats) {
       files: {
         [filename]: {
           filename: `⏰ Daily Productivity Stats - ${date}`,
-          content: lines.join("\n")
-        }
-      }
+          content: lines.join("\n"),
+        },
+      },
     });
   } catch (error) {
     console.error(`Unable to update gist\n${error}`);
@@ -89,7 +88,7 @@ function generateBarChart(percent, size) {
   return [
     syms.substring(8, 9).repeat(barsFull),
     syms.substring(semi, semi + 1),
-    syms.substring(0, 1).repeat(barsEmpty)
+    syms.substring(0, 1).repeat(barsEmpty),
   ].join("");
 }
 
