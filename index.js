@@ -92,6 +92,8 @@ function generateBarChart(percent, size) {
   ].join("");
 }
 
-(async () => {
-  await main();
-})();
+if (require.main === module) {
+  main();
+}
+
+module.exports = { main, updateGist, generateBarChart };

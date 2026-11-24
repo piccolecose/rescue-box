@@ -84,3 +84,6 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 .vscode
+
+# Test coverage report
+lcov.info

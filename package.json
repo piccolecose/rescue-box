@@ -10,7 +10,11 @@
     "type": "git"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "lint": "oxlint",
+    "test": "node --test --experimental-test-coverage --test-coverage-lines=75 --test-coverage-exclude='test/**' --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=lcov.info",
+    "format:check": "prettier --check .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",
@@ -20,6 +24,7 @@
   },
   "devDependencies": {
     "husky": "^9.1.7",
+    "oxlint": "^1.95.0",
     "prettier": "^3.9.6",
     "pretty-quick": "^4.2.2"
   },

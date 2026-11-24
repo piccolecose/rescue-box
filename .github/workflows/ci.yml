@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test
+      - name: Report line coverage
+        if: always()
+        run: |
+          pct=$(awk -F: '/^LH:/{h+=$2} /^LF:/{f+=$2} END{if (f) printf "%.2f", 100*h/f; else print "0.00"}' lcov.info)
+          echo "Line coverage: ${pct}%" | tee -a "$GITHUB_STEP_SUMMARY"
