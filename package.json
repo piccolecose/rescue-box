@@ -6,7 +6,7 @@
   "license": "ISC",
   "main": "index.js",
   "repository": {
-    "url": "https://github.com/joshghent/rescue-box",
+    "url": "https://github.com/piccolecose/rescue-box",
     "type": "git"
   },
   "scripts": {
